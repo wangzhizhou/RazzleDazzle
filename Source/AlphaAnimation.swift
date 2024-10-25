@@ -18,7 +18,7 @@ open class AlphaAnimation : Animation<CGFloat>, Animatable {
         self.view = view
     }
     
-    open func animate(_ time: CGFloat) {
+    @MainActor open func animate(_ time: CGFloat) {
         if !hasKeyframes() {return}
         view.alpha = self[time]
     }

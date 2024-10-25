@@ -16,7 +16,7 @@ open class Animator {
     
     public init() { }
     
-    open func animate(_ time: CGFloat) {
+    @MainActor open func animate(_ time: CGFloat) {
         for animation in animations {
             animation.animate(time)
         }

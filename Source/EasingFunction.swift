@@ -11,7 +11,7 @@
 
 import Foundation
 
-public typealias EasingFunction = (CGFloat) -> (CGFloat)
+public typealias EasingFunction = @Sendable (CGFloat) -> (CGFloat)
 
 public let EasingFunctionLinear: EasingFunction = { t in
     return t

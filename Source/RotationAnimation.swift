@@ -21,7 +21,7 @@ open class RotationAnimation : Animation<CGFloat>, Animatable {
     open func animate(_ time: CGFloat) {
         if !hasKeyframes() {return}
         let degrees = self[time]
-        let radians = degrees * CGFloat(M_PI / -180.0)
+        let radians = degrees * CGFloat(Double.pi / -180.0)
         let rotationTransform = CGAffineTransform(rotationAngle: radians)
         view.rotationTransform = rotationTransform
         var newTransform = rotationTransform

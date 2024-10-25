@@ -11,6 +11,7 @@ import UIKit
 /**
 Animates the view's position along the given path.
 */
+@MainActor
 open class PathPositionAnimation : Animation<CGFloat>, Animatable {
     fileprivate let view : UIView
     open var path : CGPath? {
@@ -18,8 +19,9 @@ open class PathPositionAnimation : Animation<CGFloat>, Animatable {
             createKeyframeAnimation()
         }
     }
+    
     fileprivate let animationKey = "PathPosition"
-    open var rotationMode : String? = kCAAnimationRotateAuto {
+    open var rotationMode : CAAnimationRotationMode = .rotateAuto {
         didSet {
             createKeyframeAnimation()
         }
@@ -29,13 +31,14 @@ open class PathPositionAnimation : Animation<CGFloat>, Animatable {
         self.view = view
         self.path = path
         super.init()
-        createKeyframeAnimation()
+        
+        self.createKeyframeAnimation()
         
         // CAAnimations are lost when application enters the background, so re-add them
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(PathPositionAnimation.createKeyframeAnimation),
-            name: NSNotification.Name.UIApplicationDidBecomeActive,
+            name: UIApplication.didBecomeActiveNotification,
             object: nil)
     }
     
@@ -66,9 +69,9 @@ open class PathPositionAnimation : Animation<CGFloat>, Animatable {
         animation.duration = 1
         animation.isAdditive = true
         animation.repeatCount = Float.infinity
-        animation.calculationMode = kCAAnimationPaced
+        animation.calculationMode = CAAnimationCalculationMode.paced
         animation.rotationMode = rotationMode
-        animation.fillMode = kCAFillModeBoth
+        animation.fillMode = CAMediaTimingFillMode.both
         animation.isRemovedOnCompletion = false
         return animation
     }
